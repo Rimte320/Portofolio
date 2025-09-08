@@ -1,0 +1,25 @@
+name: Auto Commit
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  
+  workflow_dispatch:      
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Buat dummy update
+        run: |
+          date > update.txt
+
+      - name: Commit dan push perubahan
+        run: |
+          git config --local user.email "rafiiqbal2607@gmail.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          git commit -m "Auto commit: $(date)" || echo "Tidak ada perubahan"
+          git push
